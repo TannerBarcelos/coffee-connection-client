@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
 import MessagePopup from '../components/common/MessagePopup'
+import { axiosInstance } from '../utils/axios'
 
 const Login = ({ setUser }) => {
   let navigate = useNavigate()
@@ -22,25 +23,21 @@ const Login = ({ setUser }) => {
   const onSubmit = async (e) => {
     e.preventDefault()
     try {
-      const result = await fetch('/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const result = await axiosInstance.post('/auth/login', {
+        data: {
           email: state.email,
           password: state.password,
-        }),
+        },
       })
-      const info = await result.json()
+      const info = result.data
       if (info.isAuthenticated) {
-        setPopup({ msg: info.msg + '!', color: 'green' })
+        setPopup({ msg: info.message + '!', color: 'green' })
         setTimeout(() => {
           setUser(info.data.role, info.isAuthenticated, info.data)
           navigate('/profile')
         }, 1500)
       } else {
-        setPopup({ msg: info.msg, color: 'red' })
+        setPopup({ msg: info.message, color: 'red' })
         setTimeout(() => setPopup(null), 3000)
       }
     } catch (error) {

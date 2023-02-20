@@ -51,19 +51,16 @@ const App = () => {
             path="/register"
             element={<Register setUser={setUser} />}
           />
-          <Route path="/profile" element={<ProtectedRoute
-            exact
-            path="/profile"
+          <Route path="/profile"
             element={<Profile userInfo={state.userInformation} />}
             isAuthenticated={state.isAuthenticated}
-          />}/>
-          <Route path="/dashboard" element={<ProtectedRoute
-            exact
+          />
+          {/* <Route path="/dashboard" element={<ProtectedRoute
             path="/dashboard"
             element={<Dashboard />}
             isAuthenticated={state.isAuthenticated}
-          />}/>
-          </Routes>
+          />}/> */}
+        </Routes>
       </Router>
   );
 };

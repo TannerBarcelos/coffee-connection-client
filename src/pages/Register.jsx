@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router'
+import { axiosInstance } from '../utils/axios'
 
 import MessagePopup from '../components/common/MessagePopup'
 
@@ -24,16 +25,13 @@ const Register = ({ setUser }) => {
   async function onFormSubmit(e) {
     e.preventDefault()
     try {
-      const response = await fetch('/auth/register', {
+      const response = await axiosInstance.post('/auth/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+        data: {
           userName,
           password,
           email,
-        }),
+        },
       })
       const info = await response.json()
       if (info.isAuthenticated) {

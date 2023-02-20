@@ -66,7 +66,7 @@ function LocationItem({ location, isAuthenticated, userInformation }) {
         />
       </div>
       <div className='content' style={{ marginTop: '1rem' }}>
-        {isAuthenticated ? (
+        {isAuthenticated && (
           <div
             className='tooltip__icon__container'
             data-tooltip='Bookmark this coffee shop to your profile'
@@ -75,7 +75,7 @@ function LocationItem({ location, isAuthenticated, userInformation }) {
               width: '30px',
               height: '30px',
               position: 'absolute',
-              top: '.8rem',
+              bottom: '6rem',
               right: '0',
             }}
           >
@@ -99,7 +99,7 @@ function LocationItem({ location, isAuthenticated, userInformation }) {
               style={{ fontSize: '1.6rem', color: '#a37dba' }}
             ></i>
           </div>
-        ) : null}
+        ) }
         <div className='header'>{location.name}</div>
         <div>{location.location.address1}</div>
         <div>{(location.distance * 0.000621371192).toFixed(2)} miles away</div>

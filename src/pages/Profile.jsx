@@ -2,57 +2,35 @@ import React, { useEffect, useState } from 'react'
 
 import BookmarkItem from '../components/BookmarkItem'
 import FilterBookmarks from '../components/FilterBookmarks'
-
-function defaultConversionOfName(name) {
-  const fullName = name.split(' ')
-  return fullName
-    .map((word) => {
-      return word[0].toUpperCase() + word.slice(1) // convert to caps of first letter only
-    })
-    .join(' ')
-}
+import { axiosInstance } from '../utils/axios'
+import { formatters } from '../utils/formatters'
 
 function Profile({ userInfo }) {
   const [shopList, setShops] = useState(null)
 
-  // this will run immediately when the component mounts and send a request to the backend to get all the bookmarked shops in the database associated with me
   useEffect(() => {
-    /**
-     * Prod: https://coffee-connection.herokuapp.com/bookmarks/${userid}
-     * Dev: http://localhost:5000/bookmarks/${userid}
-     */
     ;(async () => {
-      const res = await fetch(
-        `https://coffee-connection.herokuapp.com/bookmarks/shops/${userInfo.id}`,
-      )
-      const bookmarkedShops = await res.json()
-      setShops([...bookmarkedShops])
+      const res = await axiosInstance.get(`/shop/shops/${userInfo.id}`)
+      setShops(res.data)
     })()
   }, [])
 
   // helper function to remove shop by shop ID and find the user with their ID first
   async function removeShop(shopID) {
-    /**
-     * Prod: https://coffee-connection.herokuapp.com/bookmarks/remove
-     * Dev: http://localhost:5000/bookmarks/remove
-     */
-    const res = await fetch(
-      'https://coffee-connection.herokuapp.com/bookmarks/remove',
+    const res = await axiosInstance.post(
+      '/bookmarks/remove',
       {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+        data: {
           shopID,
           userID: userInfo.id,
-        }),
-      },
+      }
+      }
     )
-    const updatedShops = await res.json()
+    const updatedShops = res.data
     setShops(updatedShops)
   }
-  // will determine how to sort the bookmarks
+
+
   function sortBySelection(selection) {
     switch (selection) {
       case 'High to Low':
@@ -70,7 +48,6 @@ function Profile({ userInfo }) {
         ])
         return
       case 'Alphabetically':
-        // sorts alphabetically by first character
         setShops([
           ...shopList.sort(
             (shopA, shopB) =>
@@ -83,30 +60,34 @@ function Profile({ userInfo }) {
         return
     }
   }
-  // displays the bookmarks
+
   function displayBookmarks() {
-    if (!shopList || shopList.length === 0) return null
+    if (!shopList || shopList.length === 0) return <h3>No Coffee Shops Bookmarked</h3>
     else
       return (
-        <>
+        <div>
           <FilterBookmarks filter={sortBySelection} />
-          {shopList.map((shop) => (
+          {shopList && shopList.map((shop) => (
             <BookmarkItem
               key={shop.shopID}
               shop={shop}
               removeBookmark={removeShop}
             />
           ))}
-        </>
+        </div>
       )
   }
   return (
-    <div className='container'>
-      <h1 style={{ marginTop: '3rem' }} className='profile-greeting-h1'>
-        Hello, {defaultConversionOfName(userInfo.name)}
-      </h1>
-      {displayBookmarks()}
-    </div>
+    <>
+      <div className='container'>
+        <h1 style={{ margin: '3rem' }} className='profile-greeting-h1'>
+          Hello, {formatters.nameFormatter(userInfo.name)}
+        </h1>
+      </div>
+      <div className='container'>
+        {displayBookmarks()}
+      </div>
+    </>
   )
 }
 
