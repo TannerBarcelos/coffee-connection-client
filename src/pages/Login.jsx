@@ -22,7 +22,7 @@ const Login = ({ setUser }) => {
   const onSubmit = async (e) => {
     e.preventDefault()
     try {
-      const result = await fetch('http://localhost:5151/auth/login', {
+      const result = await fetch('/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

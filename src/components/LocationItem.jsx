@@ -119,7 +119,7 @@ function LocationItem({ location, isAuthenticated, userInformation }) {
             minWidth: '40%',
           }}
         >
-          View more on Yelp!{' '}
+          Yelp!{' '}
           <i
             className='fab fa-yelp'
             style={{ fontSize: '1.3rem', color: '#fff' }}

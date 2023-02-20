@@ -137,7 +137,6 @@
 
 .hero__image .form__container #search__cafe-btn:hover {
   cursor: pointer;
-  opacity: 0.8;
 }
 
 @media all and (max-width: 768px) {
@@ -364,20 +363,20 @@ body {
   display: block;
   font-size: 1.2rem;
   padding: 1rem;
+  font-weight: bold;
 }
 
 .container .section__content img {
   -o-object-fit: cover;
   object-fit: cover;
-  border-radius: var(--radius);
-  width: 200px;
-  height: 200px;
+  width: 70%;
+  height: 100%;
 }
 
 .container .card {
   padding: 0.5rem;
   width: 500px;
-  min-height: 200px;
+  min-height: 200px !important;
   border: 1px solid lightgray;
   border-radius: var(--radius);
   margin-bottom: 1.5rem;
@@ -410,6 +409,7 @@ body {
     position: absolute;
     right: 2rem;
     display: block;
+    font-size: 1.7rem;
   }
 
   .navbar .nav-links {
@@ -419,13 +419,13 @@ body {
     left: 0;
     height: 100vh;
     background: #0c0a0a;
-    padding: 40px;
+    padding: 20px;
     width: 50%;
     z-index: 1;
     -webkit-transform: translateX(-500px);
     transform: translateX(-500px);
-    -webkit-transition: 0.5s ease-in-out;
-    transition: 0.5s ease-in-out;
+    -webkit-transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out;
   }
 
   .navbar .nav-links .nav-li {
@@ -462,10 +462,9 @@ body {
   }
 
   .container .section__content img {
-    -o-object-fit: cover;
     object-fit: cover;
-    border-radius: var(--radius);
     height: 300px;
+    width: 100%;
   }
 
   .container .card {
@@ -473,7 +472,7 @@ body {
   }
 
   .card {
-    width: 350px !important;
+    width: 90% !important;
   }
 
   .profile-greeting-h1 {
