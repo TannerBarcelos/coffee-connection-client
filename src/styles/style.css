@@ -188,14 +188,13 @@
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  min-width: 40%;
-  height: 90%;
+  width: 800px;
   margin: 0 auto;
   margin-top: 100px;
   background: #fff;
   border-radius: var(--radius);
   padding: 5rem;
-  border: 1px solid lightgray;
+  border: 1px solid rgba(211, 211, 211, 0.436);
 }
 
 #login__main-container .login__form .hero-text {
